@@ -1,0 +1,20 @@
+{
+    "nome" : "reinaldo",
+    "idade" : 40,
+    "turma" : {
+        "nome_turma" : "2° B",
+        "ano" : 2025
+    },
+    "notas": [
+        {
+            "disciplina": "matematica",
+            "nota": 10
+        },
+        {
+            "disciplina": "português",
+            "nota": 10
+        }
+    ]
+
+
+}

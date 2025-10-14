@@ -1,0 +1,19 @@
+{
+    "nome": "jhonatan",
+    "username": "@jhonatan_moraes",
+    "nr_seguidores": 10,
+    "posts": [
+        {
+            "legenda": "primeiro post",
+            "curtidas": 10
+        },
+        {
+            "legenda": "segundo post",
+            "curtidas": 100
+        },
+        {
+            "legenda": "terceiro post",
+            "curtidas": 101
+        }
+    ]
+}

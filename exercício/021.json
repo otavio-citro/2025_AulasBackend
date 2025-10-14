@@ -1,0 +1,22 @@
+{
+    "string": "string",
+    "number": 10,
+    "integer": 5,
+    "boolean": true,
+    "obejeto": {
+        "string": "string",
+        "number": 10,
+        "integer": 5,
+        "boolean": true
+    },
+    "vetor": ["string", 10, 5, true],
+    "vetorObj": [
+        {
+        "string": "string",
+        "number": 10,
+        "integer": 5,
+        "boolean": true
+    }
+    ]
+    
+}
