@@ -1,0 +1,142 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+nav>a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+
+nav > a:hover {
+    color: blue;
+    scale: 1.5;
+    transition: 0.3;
+
+
+}
+
+main {
+    padding: 20px;
+    flex: 1;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.dado-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.dado-table>thead {
+    background-color: blue;
+    color: white;
+}
+
+.dado-table th,
+.dado-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.dado-table tr:nth-child(even) {
+    background-color: #b8b8b8;
+}
+
+/* estilo dos botoes */
+.btn {
+    padding: 8px 12px;
+    margin: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.btn-principal {
+    background-color: #007bff;
+
+}
+
+.btn-edit {
+    background-color: #28a745;
+
+}
+
+.btn-delete {
+    background-color: red;
+    border: none;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+.btn-secundario {
+    background-color: #6c757d;
+}
+
+.form {
+    max-width: 600px;
+    margin: 20px auto;
+    border: 1px solid #f9f9f9;
+    background-color: #ddd;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    border: 1px solid #c2c2c2;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fff;
+
+
+}
+
+.form-group input:focus {
+    border-color: #007bff
+}
+.acoes{
+    display: flex;
+}

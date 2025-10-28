@@ -1,0 +1,34 @@
+<%- include ('../includes/header.ejs', {titulo: 'cadastro de professores' }) %>
+
+
+
+
+    <main>
+        <h2>cadastre um novo professor</h2>
+
+        <form action="/professores/novo" method="post" class="form">
+            <div class="form-group">
+                <label>Nome do professor:</label>
+                <input type="text" name="nome_professor" required>
+
+            </div>
+            <div class="form-group">
+                <label>telefone do professor:</label>
+                <input type="text" name="telefone" required>
+
+            </div>
+            <div class="form-group">
+                <label>formação do professor:</label>
+                <input type="text" name="formacao" required>
+                <button type="submit" class="btn btn-secundario">adicionar</button>
+                <a href="/professores/listar" class="btn btn-secundario">cancelar</a>
+
+            </div>
+        </form>
+
+    </main>
+
+
+
+
+    <%- include ('../includes/footer.ejs') %>

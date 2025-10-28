@@ -1,0 +1,44 @@
+<%- include ('../includes/header.ejs', {titulo: 'painel administrativo' }) %>
+
+
+
+    <main>
+        <h2>lista de turmas</h2>
+        <a href="/disciplinas/novo" class="btn btn-principal">adicionar disciplinas</a>
+        <table class="dado-table">
+            <thead>
+                <tr>
+                    <th>nome</th>
+                    <th>professor</th>
+                    <th>ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (let disciplina of dadosdisciplinas) { %>
+                    <tr>
+                        <td>
+                            <%= disciplina.nome_disciplina %>
+                        </td>
+                        <td>
+                            <%= disciplina.nome %>
+                        </td>
+                        <td class="acoes">
+                            <a href="/disciplinas/editar/<%= disciplina.id_disciplina %>" class="btn btn-edit">Editar</a>
+                            <form action="/disciplinas/excluir/<%= disciplina.id_disciplina %>" method="POST">
+                                <button type="submit" class="btn btn-delete">excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
+
+
+
+    </main>
+
+
+
+
+
+    <%- include ('../includes/footer.ejs') %>
