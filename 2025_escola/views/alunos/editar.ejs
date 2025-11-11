@@ -1,0 +1,51 @@
+<%- include ('../includes/header.ejs', {titulo: 'cadastro de turmas' }) %>
+
+
+
+
+    <main>
+        <h2>atualizando dados de alunos</h2>
+
+        <form action="/alunos/editar/<%= dadosalunos.id_aluno %>" method="post" class="form">
+            <div class="form-group">
+                <label>Nome da disciplina:</label>
+                <input type="text" name="nome" value="<%= dadosalunos.nome %>" required>
+
+            </div>
+            <div class="form-group">
+                <label>idade:</label>
+                <input type="number" name="idade" value="<%= dadosalunos.idade %>" required>
+
+            </div>
+            <div class="form-group">
+                <label>sexo:</label>
+                <input type="text" name="sexo" value="<%= dadosalunos.sexo %>" required>
+
+            </div>
+            <div class="form-group">
+                <label>professor:</label>
+                <select name="id_turma" required>
+                    <option value="">selecione a turma</option>
+                    <% for (let turmas of dadosturma) { %>
+                        <option value="<%= turmas.id_turma %>" <%
+                            if(dadosalunos.id_turma == turmas.id_turma) { %>
+                            selected
+                            <% } %>
+                                ><%= turmas.nome_turma %>
+                        </option>
+                        <% } %>
+                </select>
+
+            </div>
+            <button type="submit" class="btn btn-secundario">salvar</button>
+            <a href="/alunos/listar" class="btn btn-secundario">cancelar</a>
+
+
+        </form>
+
+    </main>
+
+
+
+
+    <%- include ('../includes/footer.ejs') %>

@@ -2,6 +2,19 @@ const express = require('express')
 const rotas = express.Router();
 const BD = require('../db')
 
+rotas.get('/listar', async (req, res) => {
+ const busca = req.query.busca || '';
+ const order = req.query.ordem || 'nome_professor';
+ if (busca){
+    const sql = 'SELECT * FROM professores WHERE ativo = true and (nome ILIKE $1 or formacao ILIKE $1) ORDER BY nome'
+   const dados = await BD.query(sql, [`%${busca}%`]);
+    return res.render('professores/lista.ejs', { dadosprofessores: dados.rows });    
+}
+const dados = await BD.query ('select * from professores order by nome')
+res.render('professores/lista.ejs', {dadosprofessores: dados.rows})
+});
+
+
 //rota para o painel administrativo
 rotas.get('/listar', async (req, res) => {
     //buscando todos os professores do banco de dados
@@ -57,4 +70,5 @@ rotas.post('/editar/:id', async (req, res) => {
     await BD.query(sql, [nome_professor, telefone, formação, id])
     res.redirect('/professores/listar')
 })
+
 module.exports = rotas

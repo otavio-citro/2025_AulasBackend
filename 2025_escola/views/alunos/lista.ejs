@@ -3,12 +3,44 @@
 
 
     <main>
-        <h2>lista de professores</h2>
-        <a href="/aluno/novo" class="btn btn-principal">adicionar aluno</a>
+        <h2>lista de alunos</h2>
+        <a href="/alunos/novo" class="btn btn-principal">adicionar aluno</a>
+
+        <!-- criando form de pesquisa -->
+        <form action="/alunos/listar" method="get" class="form form-cunsulta">
+        <input type="text" name="busca" placeholder="Buscar por nome">
+        <select name="ordem" >
+            <option value="nome">ordenar por aluno</option>
+            <option value="nome desc">ordenar por aluno descendente</option>
+            <!-- <option value="formacao">ordenar por formação</option> -->
+        </select>
+        <button type="submit" class="btn btn-principal">Buscar</button>
+        </form>
+       
+
+        <section class="lista-cards">
+            <% for (let alunos of dadosalunos) { %>
+                <div class="card-aluno">
+                    <img src="<%= alunos.foto  %>" alt="">
+                    <h2> <%= alunos.nome %></h2>
+                    <p> <%= alunos.nome_turma %></p>
+                    <div class="acoes">
+                            <a href="/alunos/editar/<%= alunos.id_aluno %>" class="btn btn-edit">Editar</a>
+                            <form action="/alunos/excluir/<%= alunos.id_aluno %>" method="POST">
+                                <button type="submit" class="btn btn-delete">excluir</button>
+
+                            </form>
+
+                        </div>
+                </div>
+
+                <% } %>
+        </section>
 
         <table class="dado-table">
             <thead>
                 <tr>
+                    <th>foto</th>
                     <th>nome</th>
                     <th>idade</th>
                     <th>sexo</th>
@@ -19,6 +51,9 @@
             <tbody>
                 <% for (let alunos of dadosalunos) { %>
                     <tr>
+                        <td>
+                            <img src="<%= alunos.foto %>" width="100">
+                        </td>
                         <td>
                             <%= alunos.nome %>
                         </td>
@@ -33,7 +68,7 @@
                         </td>
                         <td class="acoes">
                             <a href="/alunos/editar/<%= alunos.id_aluno %>" class="btn btn-edit">Editar</a>
-                            <form action="/alunos/excluir/<%= alunos.id_alunos %>" method="POST">
+                            <form action="/alunos/excluir/<%= alunos.id_aluno %>" method="POST">
                                 <button type="submit" class="btn btn-delete">excluir</button>
 
                             </form>

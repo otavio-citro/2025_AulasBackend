@@ -5,6 +5,17 @@
     <main>
         <h2>lista de turmas</h2>
         <a href="/turmas/novo" class="btn btn-principal">adicionar turma</a>
+        
+        <form action="/turmas/listar" method="get" class="form form-cunsulta">
+        <input type="text" name="busca" placeholder="Buscar por nome">
+        <select name="ordem" >
+            <option value="nome_turma">ordenar por turmas</option>
+            <option value="nome_turma desc">ordenar por turmas descendente</option>
+            <!-- <option value="formacao">ordenar por formação</option> -->
+        </select>
+        <button type="submit" class="btn btn-principal">Buscar</button>
+        </form>
+        
         <table class="dado-table">
             <thead>
                 <tr>

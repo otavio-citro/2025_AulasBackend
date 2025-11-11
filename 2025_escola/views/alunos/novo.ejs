@@ -1,0 +1,61 @@
+<%- include ('../includes/header.ejs', {titulo: 'cadastro de professores' }) %>
+
+
+
+
+    <main>
+        <h2>cadastre um novo aluno </h2>
+
+        <form action="/alunos/novo" method="post" class="form">
+            <div class="form-group">
+                <label>Nome da aluno:</label>
+                <input type="text" name="nome" required>
+
+            </div>
+            <div class="form-group">
+                <label>idade:</label>
+                <input type="text" name="idade" required>
+
+            </div>
+            <div class="form-group">
+                <label>email:</label>
+                <input type="email" name="email" required>
+
+            </div>
+            <div class="form-group">
+                <label>cpf:</label>
+                <input type="text" name="cpf" required>
+
+            </div>
+            <div class="form-group">
+                <label>foto do aluno:</label>
+                <input type="text" name="foto" >
+
+            </div>
+            <div class="form-group">
+                <label>sexo:</label>
+                <input type="text" name="sexo" required>
+
+            </div>
+            <div class="form-group">
+                <label>professor:</label>
+                <select name="id_turma" required>
+                    <option value="">selecione a turma</option>
+                    <% for (let turmas of dadosturma) { %>
+                   <option value="<%= turmas.id_turma %>" ><%= turmas.nome_turma %></option>
+                        <% } %> 
+                </select>
+
+                
+
+            </div>
+            <button type="submit" class="btn btn-secundario">adicionar</button>
+            <a href="/disciplinas/listar" class="btn btn-secundario">cancelar</a>
+        </form>
+
+    </main>
+
+
+
+
+    <%- include ('../includes/footer.ejs') %>

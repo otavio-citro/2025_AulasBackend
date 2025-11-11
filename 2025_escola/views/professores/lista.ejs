@@ -6,6 +6,19 @@
         <h2>lista de professores</h2>
         <a href="/professores/novo" class="btn btn-principal">adicionar professor</a>
 
+        <!-- criando form de pesquisa -->
+        <form action="/professores/listar" method="get" class="form form-cunsulta">
+        <input type="text" name="busca" placeholder="Buscar por nome ou Formação">
+        <select name="ordem" >
+            <option value="nome_professor">ordenar por professor</option>
+            <option value="nome_professor desc">ordenar por professor descendente</option>
+            <option value="formacao">ordenar por formação</option>
+        </select>
+        <button type="submit" class="btn btn-principal">Buscar</button>
+        </form>
+       
+
+
         <table class="dado-table">
             <thead>
                 <tr>
