@@ -67,6 +67,7 @@
                             <%= alunos.nome_turma %>
                         </td>
                         <td class="acoes">
+                            <a href="/alunos/Notas/<%= alunos.id_aluno %>" class="btn btn-principal">Notas</a>
                             <a href="/alunos/editar/<%= alunos.id_aluno %>" class="btn btn-edit">Editar</a>
                             <form action="/alunos/excluir/<%= alunos.id_aluno %>" method="POST">
                                 <button type="submit" class="btn btn-delete">excluir</button>
@@ -79,7 +80,17 @@
             </tbody>
         </table>
 
+        <div class="paginacao">
+            <% if (pgAtual > 1) { %>
+                <a href="/alunos/listar?pg=<%= pgAtual - 1 %>">Anterior</a>
+            <% } %>
 
+            <span>Página <%= pgAtual %> de <%= totalPgs %> </span>
+
+            <% if (pgAtual < totalPgs) { %>
+                <a href="/alunos/listar?pg=<%= pgAtual + 1 %>">Próxima</a>
+            <% } %>
+        </div>
 
     </main>
 

@@ -44,7 +44,17 @@
             </tbody>
         </table>
 
+        <div class="paginacao">
+            <% if (pgAtual > 1) { %>
+                <a href="/disciplinas/listar?pg=<%= pgAtual - 1 %>">Anterior</a>
+            <% } %>
 
+            <span>Página <%= pgAtual %> de <%= totalPgs %> </span>
+
+            <% if (pgAtual < totalPgs) { %>
+                <a href="/disciplinas/listar?pg=<%= pgAtual + 1 %>">Próxima</a>
+            <% } %>
+        </div>
 
     </main>
 

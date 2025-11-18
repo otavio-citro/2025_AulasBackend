@@ -3,27 +3,32 @@ const rotas = express.Router();
 const BD = require('../db')
 
 rotas.get('/listar', async (req, res) => {
- const busca = req.query.busca || '';
- const order = req.query.ordem || 'nome_disciplina';
- if (busca){
-    const sql = 'SELECT * FROM disciplinas WHERE ativo = true and (nome_disciplina ILIKE $1) ORDER BY nome_disciplina'
-   const dados = await BD.query(sql, [`%${busca}%`]);
-    return res.render('disciplinas/lista.ejs', { dadosdisciplinas: dados.rows });    
-}
-const dados = await BD.query ('select * from disciplinas order by nome_disciplina')
-res.render('disciplinas/lista.ejs', {dadosdisciplinas: dados.rows})
-});
+    const busca = req.query.busca || '';
+    const ordem = req.query.ordem || 'nome_disciplina';
 
-//rota para o painel administrativo
-rotas.get('/listar', async (req, res) => {
-    //buscando todos os professores do banco de dados
-    const dados = await BD.query(`SELECT * 
-FROM disciplinas left join professores on disciplinas.id_professor = professores.id_professor
-where disciplinas.ativo = true 
-order by disciplinas.nome_disciplina`)
+    const pg = req.query.pg || 1;//variavel que controla a pag atual
+    const limite = 2// qtde de registros por pagina
+    const offset = (pg - 1) * limite //quantidade de registros a serem 'pulados'
+
+    
+    const dados = await BD.query(`
+        SELECT *, COUNT(*) OVER() AS total_itens FROM disciplinas inner join professores on disciplinas.id_professor = professores.id_professor 
+        WHERE disciplinas.ativo = true and (nome_disciplina ilike $1) 
+        order by ${ordem}
+        limit $2 offset $3 `,   
+        ['%'+ busca + '%', limite, offset]);
     console.log(dados.rows);
-    res.render('disciplinas/lista', { dadosdisciplinas: dados.rows })
-})
+    
+    const totalPgs = Math.ceil(dados.rows[0].total_itens / limite); 
+    res.render('disciplinas/lista', {
+       dadosdisciplinas: dados.rows,
+       totalPgs: totalPgs,
+       pgAtual: Number(pg),
+       busca: busca, 
+       ordem: ordem 
+    })
+
+});
 
 rotas.get('/novo', async (req, res) => {
     const dadosprofessores = await BD.query(

@@ -3,27 +3,32 @@ const rotas = express.Router();
 const BD = require('../db')
 
 rotas.get('/listar', async (req, res) => {
- const busca = req.query.busca || '';
- const order = req.query.ordem || 'nome';
- if (busca){
-    const sql = 'SELECT * FROM alunos WHERE ativo = true and (nome ILIKE $1) ORDER BY nome'
-   const dados = await BD.query(sql, [`%${busca}%`]);
-    return res.render('alunos/lista.ejs', { dadosalunos: dados.rows });    
-}
-const dados = await BD.query ('select * from alunos order by nome')
-res.render('alunos/lista.ejs', {dadosalunos: dados.rows})
-});
+    const busca = req.query.busca || '';
+    const ordem = req.query.ordem || 'nome';
 
-//rota para o painel administrativo
-rotas.get('/listar', async (req, res) => {
-    //buscando todos os professores do banco de dados
-    const dados = await BD.query(`SELECT * 
-FROM alunos left join turmas on alunos.id_turma = turmas.id_turma
-where alunos.ativo = true 
-order by alunos.nome`)
+    const pg = req.query.pg || 1;//variavel que controla a pag atual
+    const limite = 2// qtde de registros por pagina
+    const offset = (pg - 1) * limite //quantidade de registros a serem 'pulados'
+
+    
+    const dados = await BD.query(`
+        SELECT *, COUNT(*) OVER() AS total_itens FROM alunos inner join turmas on alunos.id_turma = turmas.id_turma 
+        WHERE alunos.ativo = true and (nome ilike $1) 
+        order by ${ordem}
+        limit $2 offset $3 `,   
+        ['%'+ busca + '%', limite, offset]);
     console.log(dados.rows);
-    res.render('alunos/lista', { dadosalunos: dados.rows })
-})
+    
+    const totalPgs = Math.ceil(dados.rows[0].total_itens / limite); 
+    res.render('alunos/lista', {
+       dadosalunos: dados.rows,
+       totalPgs: totalPgs,
+       pgAtual: Number(pg),
+       busca: busca, 
+       ordem: ordem 
+    })
+
+});
 
 rotas.get('/novo', async (req, res) => {
     const dadosturma = await BD.query(
@@ -89,4 +94,41 @@ rotas.post('/editar/:id', async (req, res) => {
     await BD.query(sql, [nome, idade, sexo, id_turma, id])
     res.redirect('/alunos/listar')
 })
+
+rotas.get('/notas/:id', async (req, res) => {
+    const id = req.params.id;
+
+    const sql = 'select * from alunos where id_aluno = $1'
+    const dados = await BD.query(sql, [id])
+
+    const dadosdisciplinas = await BD.query('select * from disciplinas where ativo = true order by nome_disciplina')
+
+
+    res.render('alunos/notas.ejs', { aluno: dados.rows[0], dadosdisciplinas: dadosdisciplinas.rows })
+})
+
+rotas.post('/notas/:id', async (req, res) => {
+    const id = req.params.id
+    const id_disciplina = req.body.id_disciplina;
+    const media = req.body.media;
+    const falta = req.body.falta;
+   
+    let status = 'APROVADO'
+    if(media < 7 || falta > 25){
+        status = 'REPROVADO'
+    }
+
+
+    // const {nome_professor, telefone, formacao} = req.body
+    const sql = `insert into aluno_disciplinas 
+    (id_aluno, id_disciplina, media, nr_faltas, status)
+    values ($1,$2,$3,$4,$5)`
+    
+    
+    
+    ;
+    await BD.query(sql, [id, id_disciplina, media, falta,status])
+    res.redirect('/alunos/listar')
+})
+
 module.exports = rotas
